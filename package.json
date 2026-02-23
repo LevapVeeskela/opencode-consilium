@@ -1,0 +1,58 @@
+{
+  "name": "opencode-consilium",
+  "version": "1.0.0",
+  "description": "Консилиум ИИ-экспертов через OpenCode CLI - параллельный опрос агентов и синтез ответов",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "consilium": "./bin/cli.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./config": "./dist/config.js",
+    "./agents": "./dist/agents.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "node --test src/**/*.test.js",
+    "lint": "eslint src/"
+  },
+  "keywords": [
+    "opencode",
+    "ai",
+    "agents",
+    "consilium",
+    "llm",
+    "code-review",
+    "architecture"
+  ],
+  "author": "LevapVeeskela",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LevapVeeskela/opencode-consilium"
+  },
+  "bugs": {
+    "url": "https://github.com/LevapVeeskela/opencode-consilium/issues"
+  },
+  "homepage": "https://github.com/LevapVeeskela/opencode-consilium#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

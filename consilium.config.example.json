@@ -1,0 +1,73 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LevapVeeskela/opencode-consilium/main/schema/config.schema.json",
+  "version": "1.0.0",
+
+  "experts": [
+    {
+      "name": "arch",
+      "enabled": true,
+      "priority": 1,
+      "timeout": 300000,
+      "retries": 1,
+      "prompt": "Как архитектор, проанализируй задачу кратко (3-5 предложений): ${task}"
+    },
+    {
+      "name": "ux",
+      "enabled": true,
+      "priority": 2,
+      "prompt": "Как UX-специалист, оцени задачу с точки зрения пользователя (3-5 предложений): ${task}"
+    },
+    {
+      "name": "ba",
+      "enabled": true,
+      "priority": 3,
+      "prompt": "Как бизнес-аналитик, оцени ценность и риски (3-5 предложений): ${task}"
+    },
+    {
+      "name": "sec",
+      "enabled": true,
+      "priority": 4,
+      "prompt": "Как эксперт по безопасности, проанализируй риски (3-5 предложений): ${task}"
+    }
+  ],
+
+  "chair": {
+    "agent": "consilium",
+    "timeout": 600000,
+    "maxExpertTextLength": 3000
+  },
+
+  "excludedAgents": [
+    "build",
+    "plan",
+    "compaction",
+    "summary",
+    "title",
+    "explore",
+    "general",
+    "consilium"
+  ],
+
+  "timeouts": {
+    "expert": 300000,
+    "chair": 600000,
+    "shutdown": 5000
+  },
+
+  "retry": {
+    "expertRetries": 1,
+    "chairRetries": 1,
+    "delay": 1000,
+    "exponentialBackoff": true
+  },
+
+  "output": {
+    "file": "consilium_result.md",
+    "format": "markdown",
+    "progress": true,
+    "logLevel": "info"
+  },
+
+  "autoDiscoverAgents": true,
+  "opencodeConfigPath": "opencode.json"
+}
