@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "consilium": "./bin/cli.js"
+    "consilium": "bin/cli.js"
   },
   "exports": {
     ".": {
@@ -20,12 +20,14 @@
     "dist",
     "bin",
     "README.md",
+    "README.ru.md",
+    "README.zh.md",
     "LICENSE"
   ],
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
-    "test": "node --test src/**/*.test.js",
+    "test": "node --test dist/**/*.test.js",
     "lint": "eslint src/"
   },
   "keywords": [

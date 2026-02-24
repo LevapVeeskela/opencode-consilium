@@ -268,19 +268,33 @@ function setupProgressLogging(consilium: Consilium, verbose: boolean): void {
 function setupConsoleHooks(config: ConsiliumConfig, silent: boolean): void {
   if (silent) return;
 
+  const expertStartTimes = new Map<string, number>();
+
   config.hooks = {
     ...config.hooks,
     onExpertStart: (expert: string) => {
+      expertStartTimes.set(expert, Date.now());
       console.log(`⏳ [${expert}] Запуск...`);
     },
     onExpertEnd: (result) => {
+      const startTime = expertStartTimes.get(result.agent) || Date.now();
+      const duration = ((result.duration ?? (Date.now() - startTime)) / 1000).toFixed(1);
       if (result.success) {
-        console.log(`✅ [${result.agent}] Готово (${result.text.length} симв.)`);
+        console.log(`✅ [${result.agent}] Готово (${duration}с, ${result.text.length} симв.)`);
+      } else {
+        console.log(`❌ [${result.agent}] Ошибка (${duration}с)`);
       }
+      expertStartTimes.delete(result.agent);
+    },
+    onChairStart: () => {
+      console.log(`⏳ [chair] Синтез запущен...`);
     },
     onChairEnd: (result) => {
+      const duration = ((result.duration ?? 0) / 1000).toFixed(1);
       if (result.success) {
-        console.log(`✅ [${result.agent}] Синтез завершён`);
+        console.log(`✅ [chair] Синтез завершён (${duration}с, ${result.text.length} симв.)`);
+      } else {
+        console.log(`❌ [chair] Ошибка синтеза (${duration}с)`);
       }
     }
   };

@@ -185,8 +185,8 @@ async function callAgentOnce(
   return new Promise((resolve) => {
     const args = [
       'run',
-      '--dir', '.',
       '--format', 'json',
+      '--port', '0',
       prompt
     ];
 
@@ -196,9 +196,9 @@ async function callAgentOnce(
 
     const child = spawn('opencode', args, {
       cwd: process.cwd(),
-      shell: true,
       stdio: ['ignore', 'pipe', 'pipe'],
-      windowsHide: true
+      windowsHide: true,
+      shell: process.platform === 'win32'
     });
 
     activeProcesses.add(child);
@@ -244,9 +244,10 @@ async function callAgentOnce(
       const text = parseJsonOutput(stdout);
 
       if (!text) {
+        const errorDetails = stderr ? ` stderr: ${stderr.substring(0, 500)}` : '';
         resolve({
           agent: agentName,
-          text: `[Агент ${agentName} не вернул текст]`,
+          text: `[Агент ${agentName} не вернул текст]${errorDetails}`,
           success: false,
           errorCode: 'EMPTY_RESPONSE',
           attempt
@@ -356,9 +357,9 @@ export async function callChair(
 export async function checkOpenCodeAvailable(): Promise<boolean> {
   return new Promise((resolve) => {
     const child = spawn('opencode', ['--version'], {
-      shell: true,
       stdio: 'ignore',
-      windowsHide: true
+      windowsHide: true,
+      shell: process.platform === 'win32'
     });
 
     child.on('close', (code) => {

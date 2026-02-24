@@ -1,21 +1,21 @@
 # opencode-consilium
 
-> AI Expert Consilium through OpenCode CLI — parallel agent polling and response synthesis
+> 通过 OpenCode CLI 实现 AI 专家协商会 — 并行代理轮询与响应合成
 
 [![npm version](https://badge.fury.io/js/opencode-consilium.svg)](https://badge.fury.io/js/opencode-consilium)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Features
+## 特性
 
-- 🚀 **Parallel Polling** — all experts run simultaneously
-- 🔧 **Full Configuration** — config files, CLI options, programmatic API
-- 🔌 **Plugins and Hooks** — extend functionality via lifecycle hooks
-- 🔄 **Retry Mechanism** — automatic retries on errors
-- 📊 **Multiple Formats** — text, markdown, json
-- 🛡️ **Graceful Shutdown** — proper cancellation on Ctrl+C
-- 📦 **TypeScript** — full type definitions out of the box
+- 🚀 **并行轮询** — 所有专家同时运行
+- 🔧 **完整配置** — 配置文件、CLI 选项、程序化 API
+- 🔌 **插件和钩子** — 通过生命周期钩子扩展功能
+- 🔄 **重试机制** — 错误时自动重试
+- 📊 **多种格式** — text、markdown、json
+- 🛡️ **优雅关闭** — Ctrl+C 正确取消
+- 📦 **TypeScript** — 开箱即用的完整类型定义
 
-## Installation
+## 安装
 
 ```bash
 # npm
@@ -24,38 +24,38 @@ npm install opencode-consilium
 # yarn
 yarn add opencode-consilium
 
-# globally (for CLI)
+# 全局安装（用于 CLI）
 npm install -g opencode-consilium
 ```
 
-## Quick Start
+## 快速开始
 
 ### CLI
 
 ```bash
-# Basic run
-consilium "Evaluate project architecture"
+# 基本运行
+consilium "评估项目架构"
 
-# With selected experts
-consilium -e arch,sec "Check API security"
+# 选择性专家
+consilium -e arch,sec "检查 API 安全性"
 
-# With timeout and format
-consilium --expert-timeout 120000 -f json "Task"
+# 超时和格式
+consilium --expert-timeout 120000 -f json "任务"
 ```
 
-### Programmatic API
+### 程序化 API
 
 ```typescript
 import { Consilium, runConsilium, askConsilium } from 'opencode-consilium';
 
-// Quick run
-const result = await runConsilium('Evaluate migration to React 19');
+// 快速运行
+const result = await runConsilium('评估迁移到 React 19');
 console.log(result.text);
 
-// Text only
-const answer = await askConsilium('Is Docker needed?');
+// 仅文本
+const answer = await askConsilium('需要 Docker 吗？');
 
-// Full configuration
+// 完整配置
 const consilium = new Consilium({
   experts: ['arch', 'sec'],
   chair: 'consilium',
@@ -65,49 +65,49 @@ const consilium = new Consilium({
   },
   hooks: {
     onExpertEnd: (result) => console.log(`✅ ${result.agent}`),
-    onEnd: (result) => console.log(`Done in ${result.totalTime}ms`)
+    onEnd: (result) => console.log(`完成时间: ${result.totalTime}ms`)
   }
 });
 
-const result = await consilium.run('Your task');
+const result = await consilium.run('您的任务');
 ```
 
-## CLI Options
+## CLI 选项
 
 ```
-USAGE:
-  consilium [options] <task>
+用法:
+  consilium [选项] <任务>
 
-OPTIONS:
-  -h, --help              Show help
-  -v, --version           Show version
-  -V, --verbose           Verbose output
-  -s, --silent            Silent mode
+选项:
+  -h, --help              显示帮助
+  -v, --version           显示版本
+  -V, --verbose           详细输出
+  -s, --silent            静默模式
 
-  -c, --config <file>     Path to config file
-  -e, --experts <list>    Experts comma-separated (arch,ux,ba,sec)
-  --chair <agent>         Chair agent
+  -c, --config <文件>     配置文件路径
+  -e, --experts <列表>    专家列表逗号分隔 (arch,ux,ba,sec)
+  --chair <代理>           主席代理
 
-  --expert-timeout <ms>   Expert timeout (default: 300000)
-  --chair-timeout <ms>    Chair timeout (default: 600000)
+  --expert-timeout <毫秒>  专家超时（默认: 300000）
+  --chair-timeout <毫秒>   主席超时（默认: 600000）
 
-  -o, --output <file>     Output file (default: consilium_result.txt)
-  -f, --format <format>   Output format: text, markdown, json
-  -l, --log-level <level> Log level: silent, error, warn, info, debug
+  -o, --output <文件>     输出文件（默认: consilium_result.txt）
+  -f, --format <格式>     输出格式: text, markdown, json
+  -l, --log-level <级别>   日志级别: silent, error, warn, info, debug
 
-  -r, --retries <num>     Number of retries
+  -r, --retries <数字>     重试次数
 
-COMMANDS:
-  --init                  Create example config file
-  --list-agents           Show list of available agents
-  --dry-run               Show prompts without calling
+命令:
+  --init                  创建示例配置文件
+  --list-agents           显示可用代理列表
+  --dry-run               显示提示词而不调用
 ```
 
-## Configuration
+## 配置
 
-### Config File
+### 配置文件
 
-Create `consilium.config.json`:
+创建 `consilium.config.json`:
 
 ```json
 {
@@ -144,36 +144,36 @@ Create `consilium.config.json`:
 }
 ```
 
-### Custom Prompts
+### 自定义提示词
 
 ```typescript
 const consilium = new Consilium({
   experts: [
     {
       name: 'arch',
-      prompt: (task) => `Analyze as architect: ${task}. 
-        Include: 1) Pros 2) Cons 3) Recommendations.`
+      prompt: (task) => `作为架构师分析: ${task}。
+        包含: 1) 优点 2) 缺点 3) 建议。`
     },
     {
       name: 'custom_expert',
-      prompt: 'You are an expert on ${task}. Give a brief answer.'
+      prompt: '你是 ${task} 方面的专家。给出简短回答。'
     }
   ]
 });
 ```
 
-### Custom Chair
+### 自定义主席
 
 ```typescript
 const consilium = new Consilium({
   chair: {
     agent: 'consilium',
     promptTemplate: (task, experts) => {
-      let prompt = `Task: ${task}\n\nOpinions:\n`;
+      let prompt = `任务: ${task}\n\n意见:\n`;
       for (const e of experts) {
         prompt += `${e.agent}: ${e.text}\n\n`;
       }
-      prompt += `Make a final plan with priorities.`;
+      prompt += `制定最终优先计划。`;
       return prompt;
     },
     maxExpertTextLength: 2000
@@ -181,50 +181,50 @@ const consilium = new Consilium({
 });
 ```
 
-## Lifecycle Hooks
+## 生命周期钩子
 
 ```typescript
 const consilium = new Consilium({
   hooks: {
-    // Before start
+    // 启动前
     onStart: (task, config) => {
-      console.log(`Starting consilium: ${task}`);
+      console.log(`启动协商会: ${task}`);
     },
 
-    // Experts
+    // 专家
     onExpertStart: (expert, task) => {
-      console.log(`⏳ ${expert} analyzing...`);
+      console.log(`⏳ ${expert} 分析中...`);
     },
     onExpertEnd: (result) => {
-      console.log(`✅ ${result.agent}: ${result.text.length} chars`);
+      console.log(`✅ ${result.agent}: ${result.text.length} 字符`);
     },
     onExpertError: (result) => {
       console.error(`❌ ${result.agent}: ${result.errorCode}`);
     },
 
-    // Chair
+    // 主席
     onChairStart: (task, experts) => {
-      console.log(`🧠 Synthesizing ${experts.length} opinions...`);
+      console.log(`🧠 合成 ${experts.length} 条意见...`);
     },
     onChairEnd: (result) => {
-      console.log(`📋 Done`);
+      console.log(`📋 完成`);
     },
 
-    // Completion
+    // 完成
     onEnd: (result) => {
-      console.log(`Time: ${result.totalTime}ms`);
-      // Send to Slack, save to DB, etc.
+      console.log(`时间: ${result.totalTime}ms`);
+      // 发送到 Slack、保存到数据库等
     },
 
-    // Errors
+    // 错误
     onError: (error, context) => {
-      console.error('Error:', error, context);
+      console.error('错误:', error, context);
     }
   }
 });
 ```
 
-## Plugins
+## 插件
 
 ```typescript
 import type { ConsiliumPlugin } from 'opencode-consilium';
@@ -246,7 +246,7 @@ const consilium = new Consilium(config);
 consilium.use(slackPlugin);
 ```
 
-## API Reference
+## API 参考
 
 ### Consilium
 
@@ -267,29 +267,29 @@ class Consilium {
 }
 ```
 
-### Functions
+### 函数
 
 ```typescript
-// Create instance
+// 创建实例
 function createConsilium(config?: Partial<ConsiliumConfig> | string): Consilium;
 
-// Quick run
+// 快速运行
 function runConsilium(task: string, config?: Partial<ConsiliumConfig>): Promise<ConsiliumResult>;
 
-// Text only
+// 仅文本
 function askConsilium(task: string, config?: Partial<ConsiliumConfig>): Promise<string>;
 
-// Load config
+// 加载配置
 function loadConfig(path?: string): ConfigLoadResult;
 
-// Create minimal config
+// 创建最小配置
 function createMinimalConfig(experts?: string[]): ConsiliumConfig;
 
-// Generate example config
+// 生成示例配置
 function generateExampleConfig(): string;
 ```
 
-### Types
+### 类型
 
 ```typescript
 interface ConsiliumResult {
@@ -318,31 +318,31 @@ interface ConsiliumConfig {
   retry: RetryConfig;
   output: OutputConfig;
   hooks?: ConsiliumHooks;
-  // ... see types.ts
+  // ... 见 types.ts
 }
 ```
 
-## Requirements
+## 要求
 
 - Node.js >= 18.0.0
 - OpenCode CLI >= 1.0.0
 
-## Development
+## 开发
 
 ```bash
-# Clone
+# 克隆
 git clone https://github.com/LevapVeeskela/opencode-consilium.git
 
-# Install dependencies
+# 安装依赖
 npm install
 
-# Build
+# 构建
 npm run build
 
-# Tests
+# 测试
 npm test
 ```
 
-## License
+## 许可证
 
 MIT © LevapVeeskela

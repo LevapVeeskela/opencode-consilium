@@ -21,5 +21,9 @@ npm-debug.log*
 # Test coverage
 coverage/
 
+# Local environment
+env.local
+
 # Misc
 *.tsbuildinfo
+PUBLISH_INSTRUCTIONS.md
