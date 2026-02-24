@@ -1,6 +1,6 @@
 {
   "name": "opencode-consilium",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Консилиум ИИ-экспертов через OpenCode CLI - параллельный опрос агентов и синтез ответов",
   "type": "module",
   "main": "dist/index.js",
@@ -39,7 +39,7 @@
     "code-review",
     "architecture"
   ],
-  "author": "LevapVeeskela",
+  "author": "LevapVeeskela (paulalexeev10@gmail.com)",
   "license": "MIT",
   "repository": {
     "type": "git",
